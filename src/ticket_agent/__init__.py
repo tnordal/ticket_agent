@@ -16,6 +16,8 @@ TOP_N = 10
 
 
 def load_routes(path: Path) -> list[dict]:
+    if not path.is_file():
+        raise SystemExit(f"Routes file not found: {path}")
     routes = json.loads(path.read_text())
     for route in routes:
         for key in ("name", "flyFrom", "flyTo", "departureDate"):
@@ -78,7 +80,8 @@ def main() -> None:
     parser.add_argument("--routes", type=Path, default=DEFAULT_ROUTES)
     parser.add_argument("--db", type=Path, default=DEFAULT_DB)
     sub = parser.add_subparsers(dest="command", required=True)
-    sub.add_parser("run", help="search all routes and store the cheapest price")
+    run = sub.add_parser("run", help="search all routes and store the cheapest price")
+    run.add_argument("--routes", type=Path, default=argparse.SUPPRESS, help="routes file (default: routes.json)")
     report = sub.add_parser("report", help="show price history")
     report.add_argument("-n", "--limit", type=int, default=20)
     airports = sub.add_parser("airports", help="search airport codes by text")

@@ -8,6 +8,7 @@ Personal flight price tracker. Queries the free public [Kiwi.com MCP server](htt
 ```sh
 uv sync
 uv run ticket-agent run          # search all routes in routes.json, store results
+uv run ticket-agent run --routes other_routes.json   # use a different routes file
 uv run ticket-agent report -n 30 # price history with change vs previous run
 uv run ticket-agent airports oslo
 ```
