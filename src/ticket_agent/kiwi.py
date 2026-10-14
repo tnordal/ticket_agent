@@ -111,6 +111,8 @@ async def search_flights(session: ClientSession, params: dict) -> dict:
     default = cabin_code(params.get("cabinClass"))
     out_cabin = cabin_code(params.get("cabinClassOutbound")) or default
     in_cabin = cabin_code(params.get("cabinClassInbound")) or default
+    if "returnDate" not in params:
+        in_cabin = out_cabin
     if out_cabin or in_cabin:
         out_cabin, in_cabin = out_cabin or "M", in_cabin or "M"
     if out_cabin != in_cabin:
