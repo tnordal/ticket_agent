@@ -21,6 +21,8 @@ def load_routes(path: Path) -> list[dict]:
         for key in ("name", "flyFrom", "flyTo", "departureDate"):
             if key not in route:
                 raise SystemExit(f"{path}: route {route.get('name', route)} is missing '{key}'")
+        if "TOP_N" in route and (not isinstance(route["TOP_N"], int) or route["TOP_N"] < 1):
+            raise SystemExit(f"{path}: route {route.get('name', route)} has invalid TOP_N={route['TOP_N']!r}")
     return routes
 
 
@@ -29,7 +31,8 @@ async def run_searches(routes: list[dict], conn) -> int:
     async with kiwi_session() as session:
         for route in routes:
             name = route["name"]
-            params = {k: v for k, v in route.items() if k != "name"}
+            top_n = route.get("TOP_N", TOP_N)
+            params = {k: v for k, v in route.items() if k not in ("name", "TOP_N")}
             try:
                 data = await search_flights(session, params)
             except Exception as exc:
@@ -46,7 +49,7 @@ async def run_searches(routes: list[dict], conn) -> int:
                 delta = row["cheapest_price"] - prev[0]["cheapest_price"]
                 change = f" ({delta:+.0f} vs last run)"
             print(f"[{name}] cheapest {row['cheapest_price']:.0f} {row['currency']}{change}")
-            print(format_itineraries(data["itineraries"], TOP_N))
+            print(format_itineraries(data["itineraries"], top_n))
     return failures
 
 

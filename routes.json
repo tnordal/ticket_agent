@@ -8,6 +8,7 @@
     "returnDate": "22/02/2027",
     "returnDateTo": "26/02/2027",
     "adults": 1,
+    "TOP_N": 10,
     "maxStops": 1,
     "cabinClassOutbound": "economy",
     "cabinClassInbound": "business",

@@ -28,6 +28,9 @@ This uses the free-text Airports API from API Ninjas and returns IATA-coded airp
 plus a `name`. Any extra tool argument works, e.g. `max_sector_stopovers`, `select_airlines`,
 `price_to`, `adults_hold_bags`, `nights_in_dst_from`/`nights_in_dst_to`.
 
+`TOP_N` is also supported per route and controls how many itineraries are printed for that route.
+If omitted, the default from `src/ticket_agent/__init__.py` is used.
+
 ### Max stops
 
 `"maxStops": 1` limits every leg (each direction) to at most that many stops; `0` means direct only.
