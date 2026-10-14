@@ -9,7 +9,20 @@ Personal flight price tracker. Queries the free public [Kiwi.com MCP server](htt
 uv sync
 uv run ticket-agent run          # search all routes in routes.json, store results
 uv run ticket-agent report -n 30 # price history with change vs previous run
+uv run ticket-agent airports oslo
 ```
+
+## Airport code helper
+
+Search airport codes from the CLI:
+
+```sh
+export API_NINJAS_API_KEY=...
+uv run ticket-agent airports oslo
+uv run ticket-agent airports bangkok -n 20
+```
+
+This uses the free-text Airports API from API Ninjas and returns IATA-coded airports.
 
 `routes.json` entries use the Kiwi `search-flight` tool arguments directly (dates are `dd/mm/yyyy`),
 plus a `name`. Any extra tool argument works, e.g. `max_sector_stopovers`, `select_airlines`,
