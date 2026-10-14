@@ -84,9 +84,19 @@ def main() -> None:
     airports = sub.add_parser("airports", help="search airport codes by text")
     airports.add_argument("query", help="airport/city/code text")
     airports.add_argument("-n", "--limit", type=int, default=10)
+    serve = sub.add_parser("serve", help="browse all stored runs in a web page")
+    serve.add_argument("--host", default="127.0.0.1")
+    serve.add_argument("--port", type=int, default=8000)
+    serve.add_argument("--db", type=Path, default=argparse.SUPPRESS)
     args = parser.parse_args()
 
     conn = db.connect(args.db)
+    if args.command == "serve":
+        from ticket_agent.web import serve as serve_web
+
+        conn.close()
+        serve_web(args.db, args.host, args.port)
+        return
     if args.command == "run":
         failures = asyncio.run(run_searches(load_routes(args.routes), conn))
         raise SystemExit(1 if failures else 0)
