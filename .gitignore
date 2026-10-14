@@ -12,3 +12,5 @@ wheels/
 # Price tracker data
 prices.db
 run.log
+
+.env

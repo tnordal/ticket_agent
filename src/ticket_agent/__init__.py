@@ -5,13 +5,14 @@ import sys
 from pathlib import Path
 
 from ticket_agent import db
+from ticket_agent.airports import format_airports, search_airports
 from ticket_agent.format import format_itineraries
 from ticket_agent.kiwi import kiwi_session, search_flights
 
 ROOT = Path.cwd()
 DEFAULT_ROUTES = ROOT / "routes.json"
 DEFAULT_DB = ROOT / "prices.db"
-TOP_N = 5
+TOP_N = 10
 
 
 def load_routes(path: Path) -> list[dict]:
@@ -77,10 +78,16 @@ def main() -> None:
     sub.add_parser("run", help="search all routes and store the cheapest price")
     report = sub.add_parser("report", help="show price history")
     report.add_argument("-n", "--limit", type=int, default=20)
+    airports = sub.add_parser("airports", help="search airport codes by text")
+    airports.add_argument("query", help="airport/city/code text")
+    airports.add_argument("-n", "--limit", type=int, default=10)
     args = parser.parse_args()
 
     conn = db.connect(args.db)
     if args.command == "run":
         failures = asyncio.run(run_searches(load_routes(args.routes), conn))
         raise SystemExit(1 if failures else 0)
+    if args.command == "airports":
+        print(format_airports(search_airports(args.query, args.limit)))
+        return
     print_report(conn, args.limit)
