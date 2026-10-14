@@ -1,35 +1,16 @@
 [
   {
-    "name": "EVE-BKK Januar",
-    "flyFrom": "EVE",
-    "flyTo": "BKK",
-    "departureDate": "10/01/2027",
-    "departureDateTo": "15/01/2027",
-    "returnDate": "10/02/2027",
-    "returnDateTo": "19/02/2027",
-    "adults": 1,
-    "currency": "NOK"
-  },
-  {
-    "name": "TOS-BKK Januar",
-    "flyFrom": "TOS",
-    "flyTo": "BKK",
-    "departureDate": "10/01/2027",
-    "departureDateTo": "15/01/2027",
-    "returnDate": "10/02/2027",
-    "returnDateTo": "19/02/2027",
-    "adults": 1,
-    "currency": "NOK"
-  },
-  {
-    "name": "OSL-BKK Januar",
+    "name": "OSL-BKK Januar business ut / economy hjem",
     "flyFrom": "OSL",
     "flyTo": "BKK",
     "departureDate": "10/01/2027",
     "departureDateTo": "15/01/2027",
-    "returnDate": "10/02/2027",
-    "returnDateTo": "19/02/2027",
+    "returnDate": "22/02/2027",
+    "returnDateTo": "26/02/2027",
     "adults": 1,
+    "maxStops": 1,
+    "cabinClassOutbound": "economy",
+    "cabinClassInbound": "business",
     "currency": "NOK"
-  }    
+  }
 ]

@@ -15,6 +15,21 @@ uv run ticket-agent report -n 30 # price history with change vs previous run
 plus a `name`. Any extra tool argument works, e.g. `max_sector_stopovers`, `select_airlines`,
 `price_to`, `adults_hold_bags`, `nights_in_dst_from`/`nights_in_dst_to`.
 
+### Max stops
+
+`"maxStops": 1` limits every leg (each direction) to at most that many stops; `0` means direct only.
+It is an alias for Kiwi's `max_sector_stopovers` and also applies to both searches in mixed-class routes.
+
+### Cabin class
+
+- `"cabinClass": "economy"` or `"business"` (also `premium_economy`, `first`, or Kiwi codes `M/W/C/F`) applies both ways.
+- `"cabinClassOutbound"` / `"cabinClassInbound"` set the class per direction, e.g. business out, economy back.
+  An omitted direction defaults to economy.
+
+Kiwi takes one cabin class per search, so when the two directions differ the agent runs two one-way
+searches and pairs the cheapest ones (return must depart after arrival; `nights_in_dst_*` is honored).
+The booking URL is then two links joined by ` | `. `ret_*` filters apply to the inbound search.
+
 ## Schedule (4x per day)
 
 `crontab -e`:
